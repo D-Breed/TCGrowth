@@ -1,0 +1,515 @@
+/* ==========================================================================
+   TCGrowth custom styles
+   Bootstrap handles the grid, spacing utilities and base reboot.
+   This file only adds what Bootstrap does not cover:
+   1. Theme tokens (light / dark)     5. Intro + footer
+   2. Font size variants              6. Slideshow (embedded + full screen)
+   3. Navigation + preference toggles 7. Image sizing rules
+   4. Header                          8. Reduced motion
+   ========================================================================== */
+
+/* ---------- 1. Theme tokens ----------------------------------------------
+   Bootstrap 5.3 reads --bs-* variables and switches them with data-bs-theme.
+   Overriding them here recolors every Bootstrap component at once.
+   No pure red or pure green is used; the accent is a deep forest green in
+   light mode and a soft sage in dark mode, both paired with purple/gold
+   focus colors so state is never conveyed by red/green alone. */
+:root,
+[data-bs-theme="light"] {
+  --bs-body-bg: rgb(207, 207, 173);           /* sage cream, rgb(193,203,158) */
+  --bs-body-color: #000;           /* black text */
+  --bs-emphasis-color: #000;
+  --bs-secondary-color: #3b3a2c;   /* 6.7:1 on sage */
+  --bs-border-color: #a3ad80;
+  --bs-link-color: #1a4d2e;
+  --bs-link-color-rgb: 26, 77, 46;
+  --bs-link-hover-color: #0f3320;
+  --bs-link-hover-color-rgb: 15, 51, 32;
+
+  --tc-surface: cornsilk;           /* cornsilk cream for the slideshow card */
+  --tc-accent: #1a4d2e;            /* forest green: 5.7:1 on sage, 5.8:1 on surface */
+  --tc-accent-contrast: #fffdf6;   /* text on accent */
+  --tc-focus: #4a1f70;             /* purple focus ring, 7.2:1 on sage */
+  --tc-icon-blend: multiply;       /* hides white JPG/PNG backgrounds on sage */
+  --tc-icon-bg: transparent;
+}
+
+[data-bs-theme="dark"] {
+  --bs-body-bg: #1a1322;           /* purple-black */
+  --bs-body-color: #fff;           /* white text */
+  --bs-emphasis-color: #fff;
+  --bs-secondary-color: #d4cadf;
+  --bs-border-color: #43375a;
+  --bs-link-color: #a8ddb5;
+  --bs-link-color-rgb: 168, 221, 181;
+  --bs-link-hover-color: #cdeed6;
+  --bs-link-hover-color-rgb: 205, 238, 214;
+
+  --tc-surface: #251c30;
+  --tc-accent: #a8ddb5;            /* soft sage, 11:1 on purple-black */
+  --tc-accent-contrast: #1a1322;
+  --tc-focus: #f2c14e;             /* gold focus ring */
+  --tc-icon-blend: normal;
+  --tc-icon-bg: #fff;              /* matches the icons' own white backgrounds */
+}
+
+/* ---------- 2. Font size variants ----------------------------------------
+   Bootstrap sizes everything in rem, so scaling the root scales the whole
+   page (and the slideshow) consistently. Large = 1.4x medium. */
+html[data-font-size="medium"] { font-size: 100%; }
+html[data-font-size="large"]  { font-size: 140%; }
+
+/* In-page links (TCGrowth -> #top) land below the sticky nav, not under it */
+html { scroll-padding-top: var(--nav-h, 64px); }
+
+body {
+  --bs-body-font-family: "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-family: var(--bs-body-font-family);
+  line-height: 1.6;
+}
+
+h1, h2, h3,
+.site-hero {
+  font-family: "Fraunces", Georgia, "Times New Roman", serif;
+  font-optical-sizing: auto;
+  line-height: 1.15;
+  text-wrap: balance;
+}
+
+/* One consistent, highly visible keyboard focus style */
+:focus-visible {
+  outline: 3px solid var(--tc-focus);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.skip-link {
+  position: absolute;
+  top: .5rem;
+  left: .5rem;
+  z-index: 1100;
+  padding: .5rem 1rem;
+  background: var(--tc-accent);
+  color: var(--tc-accent-contrast);
+  border-radius: .375rem;
+}
+
+/* ---------- 3. Navigation + preference toggles --------------------------- */
+.site-nav {
+  isolation: isolate;              /* own layer: opaque over scrolling content, contains the leaf blend */
+  overflow: hidden;                /* crops the leaf backdrop to the bar */
+  background-color: var(--bs-body-bg);
+  border-bottom: 1px solid var(--bs-border-color);
+  padding-block: .5rem;
+}
+
+/* "TCGrowth" brand = Home link */
+.site-nav__brand {
+  position: relative;
+  font-family: "Fraunces", Georgia, "Times New Roman", serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--bs-body-color);     /* black in light mode, white in dark */
+  text-decoration: none;
+  padding: .25rem .5rem;
+}
+@media (hover: hover) {
+  .site-nav__brand:hover { text-decoration: underline; text-underline-offset: .2em; }
+}
+
+/* Plant-Backdrop leaves peeking out behind the brand (cropped by the nav) */
+.site-nav__brand::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: -1.5rem;
+  top: -1.4rem;
+  width: 13rem;
+  height: 13rem;
+  background: url("Image/Plant-Backdrop.jpg") top center / contain no-repeat;
+  opacity: .35;
+  mix-blend-mode: multiply;
+}
+[data-bs-theme="dark"] .site-nav__brand::before {
+  filter: invert(1) hue-rotate(180deg);
+  mix-blend-mode: screen;
+  opacity: .4;
+}
+
+/* Two-option pill: the active option gets the filled accent chip */
+.pref-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: .125rem;
+  padding: .1875rem;
+  min-height: 44px;                 /* WCAG 2.5.8 target size, comfortably */
+  border: 1px solid var(--bs-border-color);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--bs-body-color);
+  cursor: pointer;
+}
+
+.pref-toggle__opt {
+  display: grid;
+  place-items: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 999px;
+  transition: background-color .2s, color .2s;
+}
+
+.pref-toggle[aria-pressed="false"] .pref-toggle__opt--off,
+.pref-toggle[aria-pressed="true"]  .pref-toggle__opt--on {
+  background: var(--tc-accent);
+  color: var(--tc-accent-contrast);
+}
+
+.pref-toggle__letter {
+  font-weight: 700;
+  font-size: .875rem;
+  line-height: 1;
+}
+.pref-toggle__letter--lg { font-size: 1.225rem; }   /* 1.4 x .875 */
+
+/* ---------- 4. Header ---------------------------------------------------- */
+.site-header {
+  position: relative;
+  isolation: isolate;             /* keeps the backdrop blend inside the header */
+  background-color: var(--bs-body-bg);
+  overflow: hidden;
+  padding-block: clamp(1rem, 3vw, 2.25rem) clamp(1.5rem, 4vw, 3rem);
+}
+
+/* Plant-Backdrop as a faint watermark behind the headline.
+   Light: multiply drops the white. Dark: invert + screen drops the (now black) background. */
+.site-header::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -10% auto -10% -6%;
+  width: min(60vw, 560px);
+  background: url("Image/Plant-Backdrop.jpg") center / contain no-repeat;
+  opacity: .14;
+  mix-blend-mode: multiply;
+}
+[data-bs-theme="dark"] .site-header::before {
+  filter: invert(1) hue-rotate(180deg);
+  mix-blend-mode: screen;
+  opacity: .22;
+}
+
+/* Title left, logo right, bottoms aligned so the logo's base sits on the title line */
+.site-header__brand {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.site-title {
+  font-size: clamp(1.25rem, 1rem + 1vw, 1.75rem);
+  font-weight: 700;
+  color: var(--tc-accent);
+  margin: 0;
+}
+
+.site-hero {
+  font-size: clamp(2rem, 1.2rem + 3.6vw, 4rem);
+  font-weight: 600;
+  margin: 0;
+}
+
+/* Content under the "TCGrowth Consulting" title is indented from it.
+   Phones: a small indent, full remaining width.
+   768px and up: a deeper indent, each block capped at 70% of the page width. */
+.site-hero,
+.intro__heading,
+.intro__body {
+  margin-left: 1rem;
+}
+@media (min-width: 768px) {
+  .site-hero,
+  .intro__heading,
+  .intro__body {
+    margin-left: clamp(2rem, 5vw, 4.5rem);
+    max-width: 70%;
+  }
+}
+
+/* ---------- 5. Intro + footer -------------------------------------------- */
+.intro {
+  padding-block: 1rem 2.5rem;
+}
+.intro__heading {
+  font-size: clamp(1.25rem, 1rem + 1vw, 1.625rem);
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+.intro__body {
+  font-size: 1.0625rem;
+  margin-bottom: 0;
+}
+
+.site-footer {
+  border-top: 1px solid var(--bs-border-color);
+  padding-block: 2rem;
+  margin-top: 3rem;
+  color: var(--bs-secondary-color);
+}
+.site-footer__note { margin-bottom: .25rem; }
+
+/* ---------- 6. Slideshow ------------------------------------------------- */
+.slideshow {
+  display: flex;
+  flex-direction: column;
+  background: var(--tc-surface);
+  border: 1px solid var(--bs-border-color);
+  border-left: 6px solid var(--tc-accent);   /* the "stem" of the box */
+  border-radius: .75rem;
+}
+
+/* All slides share one grid cell, so the box is as tall as the tallest
+   slide and never jumps in height when navigating. */
+.slides {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);   /* never wider than the screen */
+  flex: 1 1 auto;
+  padding: clamp(1.25rem, 3vw, 2.5rem);
+}
+
+.slide {
+  grid-area: 1 / 1;
+  visibility: hidden;            /* hidden slides leave tab order + a11y tree */
+  opacity: 0;
+  transition: opacity .3s ease, visibility 0s linear .3s;
+}
+.slide.is-active {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity .3s ease, visibility 0s;
+}
+
+.slide-kicker {
+  font-weight: 700;
+  color: var(--tc-accent);
+  margin-bottom: .25rem;
+}
+
+.slide-title {
+  font-size: clamp(1.375rem, 1.1rem + 1.2vw, 2rem);
+  font-weight: 700;
+  color: var(--tc-accent);         /* same green as the Welcome line */
+  margin-bottom: .75rem;
+}
+
+.slide-why {
+  font-size: 1.0625rem;
+  color: var(--bs-secondary-color);
+  margin-bottom: 1rem;
+}
+.slide-why strong { color: var(--bs-body-color); }
+
+.slide-note { font-weight: 700; margin-bottom: .5rem; }
+
+.slide-list {
+  padding-left: 1.25rem;
+  margin: 0;
+}
+.slide-list li { margin-bottom: .375rem; }
+.slide-list li::marker { color: var(--tc-accent); }
+
+/* Slide 0: welcome */
+.slide--welcome {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+.slide-welcome__title {
+  font-size: clamp(1.75rem, 1.2rem + 2.4vw, 3rem);
+  font-weight: 700;
+  margin-bottom: .25rem;
+}
+.slide-welcome__tagline {
+  font-size: 1.125rem;
+  margin: 0;
+}
+
+/* Slide 9: closing */
+.slide--closing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  text-align: center;
+}
+.slide-closing__email {
+  font-size: 1.25rem;
+  font-weight: 700;
+  overflow-wrap: anywhere;         /* long address can break on narrow screens */
+  margin: 0;
+}
+
+/* Controls bar: arrows at the sides, counter centered */
+.slide-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: .75rem clamp(1rem, 3vw, 2.5rem);
+  border-top: 1px solid var(--bs-border-color);
+}
+.slide-controls__center { text-align: center; }
+.slide-counter { margin: 0; font-weight: 700; }
+.slide-hint {
+  display: none;                 /* only shown in full-screen mode */
+  margin: 0;
+  font-size: .875rem;
+  color: var(--bs-secondary-color);
+}
+
+.slide-btn {
+  flex: 0 0 auto;                  /* keep arrows round when space is tight */
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border: 2px solid var(--tc-accent);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--tc-accent);
+  cursor: pointer;
+  transition: background-color .2s, color .2s;
+}
+.slide-btn:hover:not([aria-disabled="true"]) {
+  background: var(--tc-accent);
+  color: var(--tc-accent-contrast);
+}
+.slide-btn[aria-disabled="true"] {
+  opacity: .4;
+  cursor: not-allowed;
+}
+
+/* Full-screen mode: the slideshow fills the viewport below the sticky nav,
+   so the TCGrowth Home link and both preference toggles stay reachable. --nav-h is set by JS. */
+body.slideshow-open { overflow: hidden; }
+
+.slideshow.is-fullscreen {
+  position: fixed;
+  z-index: 1010;                 /* below .sticky-top (1020) */
+  inset: var(--nav-h, 64px) 0 0 0;
+  border-radius: 0;
+  border-width: 0 0 0 8px;
+}
+.slideshow.is-fullscreen .slides {
+  overflow-y: auto;              /* long slides at 1.4x text still scroll */
+  padding: clamp(1.5rem, 5vw, 4rem) clamp(1.5rem, 8vw, 7rem);
+  font-size: 1.15em;
+}
+.slideshow.is-fullscreen .slide-hint { display: block; }
+@media (max-width: 575.98px) {
+  .slideshow.is-fullscreen .slide-hint { display: none; }   /* TCGrowth is right above; save the space */
+}
+
+/* ---------- 7. Image sizing ---------------------------------------------- */
+
+/* Shared treatment for the small white-background JPG icons */
+.bullet-icon,
+.slide-figure {
+  mix-blend-mode: var(--tc-icon-blend);
+  background-color: var(--tc-icon-bg);
+}
+
+/* Bullet icons: fixed 30x30, vertically centered on the first line of text.
+   (1lh = one line of the list item's text; the fallback margin covers older browsers) */
+.icon-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.icon-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: .75rem;
+  margin-bottom: .75rem;
+}
+.bullet-icon {
+  flex: 0 0 30px;
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  margin-top: .1rem;
+  margin-top: calc((1lh - 30px) / 2);
+}
+[data-bs-theme="dark"] .bullet-icon { border-radius: 6px; }
+
+/* Top-right images float right inside .slide-body.
+   Small screens (< 768px): text wraps around the image, then flows
+   underneath it at full width, so nothing is squeezed into a narrow column.
+   Wider screens: each text block becomes its own formatting context
+   (flow-root), which keeps it entirely beside the image, never under or over it. */
+.slide-figure {
+  float: right;
+  width: clamp(64px, 18vw, 150px);   /* source icons are ~90px; capped to limit blur */
+  height: auto;
+  margin: 0 0 .75rem 1rem;
+}
+.slide-figure--wide {
+  width: clamp(110px, 32vw, 300px);  /* Web-Mobile is a wide 500x250 photo */
+  border-radius: .5rem;
+}
+/* Contain the float so the slide's height includes the image */
+.slide-body { display: flow-root; }
+
+@media (min-width: 768px) {
+  .slide-figure { margin-left: clamp(1rem, 3vw, 2.5rem); }
+  .slide-body > :not(.slide-figure) { display: flow-root; }
+}
+
+[data-bs-theme="dark"] .slide-figure:not(.slide-figure--wide) {
+  padding: .5rem;
+  border-radius: .75rem;
+}
+.slideshow.is-fullscreen .slide-figure { width: clamp(80px, 16vw, 180px); }
+.slideshow.is-fullscreen .slide-figure--wide { width: clamp(140px, 30vw, 420px); }
+
+/* Welcome banner and logos */
+.slide-welcome__image {
+  width: 100%;
+  height: auto;
+  border-radius: .5rem;
+}
+.site-header__logo,
+.slide-closing__logo {
+  height: auto;
+  mix-blend-mode: var(--tc-icon-blend);
+}
+.site-header__logo { flex: 0 0 auto; width: clamp(60px, 9vw, 96px); }
+.slide-closing__logo { width: clamp(110px, 18vw, 180px); }
+[data-bs-theme="dark"] .site-header__logo,
+[data-bs-theme="dark"] .slide-closing__logo {
+  background: var(--tc-icon-bg);
+  padding: .5rem;
+  border-radius: .75rem;
+}
+
+/* Phones held sideways: short viewport, so tighten full-screen spacing */
+@media (orientation: landscape) and (max-height: 500px) {
+  .slideshow.is-fullscreen .slides { padding: 1rem 2rem; font-size: 1em; }
+  .slideshow.is-fullscreen .slide-controls { padding-block: .375rem; }
+  .slideshow.is-fullscreen .slide-hint { display: none; }
+  .slide-btn { width: 2.75rem; height: 2.75rem; }
+}
+
+/* ---------- 8. Reduced motion -------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: .01ms !important;
+    transition-delay: 0s !important;
+  }
+}

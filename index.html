@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light" data-font-size="medium">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TCGrowth Consulting | Marketing strategy for small nonprofits</title>
+  <meta name="description" content="TCGrowth Consulting helps small nonprofits sharpen their messaging, website, data and marketing strategy.">
+
+  <!-- Bootstrap 5.3 (CSS only: no Bootstrap JS components are used, so the bundle is not loaded) -->
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+        crossorigin="anonymous">
+
+  <!-- Typefaces: Atkinson Hyperlegible (designed for low-vision readability) + Fraunces for headings -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap">
+
+  <!-- Custom styles load after Bootstrap so they can override its theme variables -->
+  <link rel="stylesheet" href="custom.css">
+
+  <!-- Loaded in <head> (not deferred) so saved theme/font size apply before first paint -->
+  <script src="script.js"></script>
+</head>
+<body>
+  <a class="visually-hidden-focusable skip-link" href="#main">Skip to main content</a>
+
+  <!-- ===== Top navigation: TCGrowth (Home link) + user preference controls ===== -->
+  <nav class="navbar sticky-top site-nav" id="siteNav" aria-label="Main">
+    <div class="container d-flex align-items-center gap-2">
+      <!-- Brand doubles as the Home link (also closes the full-screen slideshow) -->
+      <a class="site-nav__brand" href="#top" id="homeLink" aria-label="TCGrowth home">TCGrowth</a>
+
+      <div class="ms-auto d-flex align-items-center gap-2" role="group" aria-label="Display preferences">
+        <!-- Light/dark toggle: aria-pressed="true" means dark mode is on -->
+        <button type="button" class="pref-toggle" id="themeToggle" aria-pressed="false">
+          <span class="visually-hidden">Dark mode</span>
+          <span class="pref-toggle__opt pref-toggle__opt--off" aria-hidden="true">
+            <!-- Sun -->
+            <svg viewBox="0 0 24 24" width="20" height="20" focusable="false">
+              <circle cx="12" cy="12" r="4.5" fill="currentColor"/>
+              <g stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <path d="M12 1.5v2.5M12 20v2.5M1.5 12H4M20 12h2.5M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M4.6 19.4l1.8-1.8M17.6 6.4l1.8-1.8"/>
+              </g>
+            </svg>
+          </span>
+          <span class="pref-toggle__opt pref-toggle__opt--on" aria-hidden="true">
+            <!-- Quarter (crescent) moon -->
+            <svg viewBox="0 0 24 24" width="20" height="20" focusable="false">
+              <path fill="currentColor" d="M20.5 14.6A8.5 8.5 0 0 1 9.4 3.5a8.5 8.5 0 1 0 11.1 11.1z"/>
+            </svg>
+          </span>
+        </button>
+
+        <!-- Font size toggle: aria-pressed="true" means large (1.4x) text is on -->
+        <button type="button" class="pref-toggle" id="fontToggle" aria-pressed="false">
+          <span class="visually-hidden">Large text</span>
+          <span class="pref-toggle__opt pref-toggle__opt--off pref-toggle__letter" aria-hidden="true">A</span>
+          <span class="pref-toggle__opt pref-toggle__opt--on pref-toggle__letter pref-toggle__letter--lg" aria-hidden="true">A</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== Page header: brand title, logo top-right, sprout backdrop (via CSS) ===== -->
+  <header class="site-header" id="top" tabindex="-1" data-page-content>
+    <div class="container">
+      <!-- Title and logo share one row; the logo's base sits on the title's line -->
+      <div class="site-header__brand">
+        <h1 class="site-title">TCGrowth Consulting</h1>
+        <img class="site-header__logo" src="Image/Logo.png" alt="TCGrowth logo" width="165" height="200">
+      </div>
+      <p class="site-hero">Sharp messaging wins over a technically superior website</p>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ===== Intro copy ===== -->
+    <section class="container intro" aria-labelledby="introHeading" data-page-content>
+      <h2 class="intro__heading" id="introHeading">Messaging determines whether the right visitor takes the right action.</h2>
+      <p class="intro__body">
+        Knowing the person, group, or groups you want to reach and why they would care is the first step to a
+        Marketing plan. Knowing exactly what it is you do, why you do it, and why these people would care, with
+        wallets open, is at the root of success in a non-profit organization. Keep in mind that what is critical
+        to one person may be noise to the next, so make skimming and navigation simple, whether on your website,
+        social media, or in advertising. Try not to waste time entertaining the world and focus on the people who
+        share your mission or need a product you offer.
+      </p>
+    </section>
+
+    <!-- ===== Slideshow (10 slides). Forward arrow opens full-screen mode; the TCGrowth link or Esc closes it. ===== -->
+    <div class="container slideshow-wrap">
+      <section class="slideshow" id="slideshow" aria-roledescription="carousel" aria-labelledby="slideshowHeading">
+        <h2 class="visually-hidden" id="slideshowHeading">The path to grow: our approach in ten slides</h2>
+
+        <div class="slides">
+          <!-- Slide 0: Welcome -->
+          <article class="slide slide--welcome is-active" aria-roledescription="slide" aria-label="1 of 10">
+            <div class="slide-welcome__text">
+              <p class="slide-kicker">Welcome</p>
+              <h3 class="slide-welcome__title">TCGrowth Consulting</h3>
+              <p class="slide-welcome__tagline">The Path to Grow: An Exciting Journey Together!</p>
+            </div>
+            <img class="slide-welcome__image" src="Image/Growth-Journey.jpg" width="1920" height="600"
+                 alt="A green seedling rising from soil beside a cyclist racing through a burst of color">
+          </article>
+
+          <!-- Slide 1 -->
+          <article class="slide" aria-roledescription="slide" aria-label="2 of 10">
+            <h3 class="slide-title">Building a stronger Nonprofit</h3>
+            <p class="slide-why"><strong>Focus:</strong> Small nonprofits serious about growth in reach and sustainability.</p>
+            <ul class="icon-list">
+              <li><img class="bullet-icon" src="Image/Target.jpg" alt="" width="30" height="30">Small &ndash; under 1M in annual donations</li>
+              <li><img class="bullet-icon" src="Image/Grow.jpg" alt="" width="30" height="30">Committed to getting better together</li>
+              <li><img class="bullet-icon" src="Image/Reality.jpg" alt="" width="30" height="30">Open to tackling current realities</li>
+            </ul>
+          </article>
+
+          <!-- Slide 2 -->
+          <article class="slide" aria-roledescription="slide" aria-label="3 of 10">
+            <div class="slide-body">
+              <img class="slide-figure" src="Image/Connections.jpg" alt="" width="89" height="75">
+              <h3 class="slide-title">Clarify Products and Services</h3>
+              <p class="slide-why"><strong>Why:</strong> Does the world see what we know?</p>
+              <ul class="slide-list">
+                <li>Main purpose or Mission?</li>
+                <li>Target population(s) struggles, geography?</li>
+                <li>Delivered Products &amp; Services?</li>
+                <li>AI evaluation of the entity today &ndash; Gaps?</li>
+                <li>Similar organizations &ndash; similar populations</li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- Slide 3 -->
+          <article class="slide" aria-roledescription="slide" aria-label="4 of 10">
+            <div class="slide-body">
+              <img class="slide-figure slide-figure--wide" src="Image/Web-Mobile.png" alt="" width="500" height="250">
+              <h3 class="slide-title">Website Concept</h3>
+              <p class="slide-why"><strong>Why:</strong> Do we refresh or start new?</p>
+              <ul class="slide-list">
+                <li>Main Menu, Navigation and Adaptable designs</li>
+                <li>Colors, Typography and Accessibility</li>
+                <li>Home &amp; Section page Style</li>
+                <li>Product/ Service page Styles</li>
+                <li>SEO &amp; GEO &ndash; Gaps?</li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- Slide 4 -->
+          <article class="slide" aria-roledescription="slide" aria-label="5 of 10">
+            <div class="slide-body">
+              <img class="slide-figure" src="Image/Flowchart.jpg" alt="" width="87" height="75">
+              <h3 class="slide-title">Map Work Processes with Key Data</h3>
+              <p class="slide-why"><strong>Why:</strong> Do we have redundant systems or lack automation?</p>
+              <ul class="slide-list">
+                <li>Identify Web Forms (Donor tracking, marketing, privacy…)</li>
+                <li>Donation Collection &amp; Campaign needs</li>
+                <li>E-commerce needs</li>
+                <li>Workflow automation opportunities?</li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- Slide 5 -->
+          <article class="slide" aria-roledescription="slide" aria-label="6 of 10">
+            <h3 class="slide-title">Draft Input Form Styles &amp; Access</h3>
+            <p class="slide-why"><strong>Why:</strong> Do our Forms drive action, are they easy to find, and do we use the data?</p>
+            <ul class="icon-list">
+              <li><img class="bullet-icon" src="Image/Goals.jpg" alt="" width="30" height="30">Form goals, tracking &amp; responsibility</li>
+              <li><img class="bullet-icon" src="Image/Welcome.jpg" alt="" width="30" height="30">Form Access and Welcome?</li>
+              <li><img class="bullet-icon" src="Image/Data.jpg" alt="" width="30" height="30">Data storage</li>
+            </ul>
+          </article>
+
+          <!-- Slide 6 -->
+          <article class="slide" aria-roledescription="slide" aria-label="7 of 10">
+            <h3 class="slide-title">Conceptual Business Dashboards</h3>
+            <p class="slide-why"><strong>Why:</strong> Are we collecting and using the data we need for decisions and management?</p>
+            <ul class="icon-list">
+              <li><img class="bullet-icon" src="Image/KPI.jpg" alt="" width="30" height="30">KPI (Key Performance Indicators) measure success</li>
+              <li><img class="bullet-icon" src="Image/Source-Data.jpg" alt="" width="30" height="30">Source Data for accurate insights</li>
+              <li><img class="bullet-icon" src="Image/Reach.jpg" alt="" width="30" height="30">Audiences (Board, Management, Staff Roles…) to tailor</li>
+            </ul>
+          </article>
+
+          <!-- Slide 7 -->
+          <article class="slide" aria-roledescription="slide" aria-label="8 of 10">
+            <div class="slide-body">
+              <img class="slide-figure" src="Image/Marketing.jpg" alt="" width="76" height="69">
+              <h3 class="slide-title">Marketing Strategy</h3>
+              <p class="slide-why"><strong>Why:</strong> How do we communicate to retain existing donors and find new ones?</p>
+              <ul class="slide-list">
+                <li>Website SEO basics &ndash; ID gaps</li>
+                <li>To Blog or not to Blog &ndash; Values in sharing success, challenges…</li>
+                <li>Social Media &ndash; AI enhancements to leverage time</li>
+                <li>Tracking Progress (Analytics, UTM channels, Donations…)</li>
+                <li>Building GEO &ndash; getting noticed by AI</li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- Slide 8 -->
+          <article class="slide" aria-roledescription="slide" aria-label="9 of 10">
+            <div class="slide-body">
+              <img class="slide-figure" src="Image/Schedule.jpg" alt="" width="70" height="67">
+              <h3 class="slide-title">Build overall Project and Phases</h3>
+              <p class="slide-why"><strong>Why:</strong> Phases help us see major steps, while project details help us walk through</p>
+              <p class="slide-note">Each Phase can be a standalone Project:</p>
+              <ul class="slide-list">
+                <li>Deliverables</li>
+                <li>Testing, then Launch</li>
+                <li>Maintenance Instructions &amp; Training</li>
+                <li>Tracking Impact</li>
+              </ul>
+            </div>
+          </article>
+
+          <!-- Slide 9: Closing -->
+          <article class="slide slide--closing" aria-roledescription="slide" aria-label="10 of 10">
+            <img class="slide-closing__logo" src="Image/Logo.png" alt="TCGrowth logo" width="165" height="200">
+            <h3 class="visually-hidden">Contact TCGrowth</h3>
+            <p class="slide-closing__email"><a href="mailto:tcgrowth@outlook.com">tcgrowth@outlook.com</a></p>
+          </article>
+        </div>
+
+        <!-- Manual controls. aria-disabled (not disabled) keeps focus on the button at either end. -->
+        <div class="slide-controls">
+          <button type="button" class="slide-btn" id="prevSlide" aria-label="Previous slide">
+            <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
+              <path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <div class="slide-controls__center">
+            <p class="slide-counter" id="slideCounter" aria-live="polite">Slide 1 of 10</p>
+            <p class="slide-hint">Select TCGrowth or press Esc to leave full screen</p>
+          </div>
+          <button type="button" class="slide-btn" id="nextSlide" aria-label="Next slide (opens full screen)">
+            <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
+              <path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- ===== Footer ===== -->
+  <footer class="site-footer" data-page-content>
+    <div class="container">
+      <p class="site-footer__note"><em>Single product project to complete Market Strategy Development</em></p>
+      <p class="mb-0">Contact us: <a href="mailto:tcgrowth@outlook.com">tcgrowth@outlook.com</a></p>
+    </div>
+  </footer>
+</body>
+</html>
