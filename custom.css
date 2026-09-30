@@ -222,16 +222,25 @@ h1, h2, h3,
   margin: 0;
 }
 
+/* One-line "who we help + outcome" under the hero */
+.site-subhead {
+  font-size: clamp(1.0625rem, 1rem + .4vw, 1.25rem);
+  color: var(--bs-secondary-color);
+  margin: .75rem 0 0;
+}
+
 /* Content under the "TCGrowth Consulting" title is indented from it.
    Phones: a small indent, full remaining width.
    768px and up: a deeper indent, each block capped at 70% of the page width. */
 .site-hero,
+.site-subhead,
 .intro__heading,
 .intro__body {
   margin-left: 1rem;
 }
 @media (min-width: 768px) {
   .site-hero,
+  .site-subhead,
   .intro__heading,
   .intro__body {
     margin-left: clamp(2rem, 5vw, 4.5rem);
@@ -315,11 +324,49 @@ h1, h2, h3,
 .slide-note { font-weight: 700; margin-bottom: .5rem; }
 
 .slide-list {
-  padding-left: 1.25rem;
+  padding-left: 1.3rem;
   margin: 0;
 }
-.slide-list li { margin-bottom: .375rem; }
+.slide-list li { margin-bottom: .35rem; }
 .slide-list li::marker { color: var(--tc-accent); }
+
+/* "Who we work with": the client's problem, set off as a quote-style callout */
+.slide-problem {
+  font-size: 1.125rem;
+  font-style: italic;
+  border-left: 4px solid var(--tc-accent);
+  padding-left: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+/* "Why TCGrowth": each credential is a bold label with a line of proof under it */
+.credential-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 1rem;
+}
+.credential-list li {
+  display: flex;
+  flex-direction: column;
+  padding: .75rem 1rem;
+  border: 1px solid var(--bs-border-color);
+  border-left: 4px solid var(--tc-accent);
+  border-radius: .5rem;
+}
+.credential-list strong { color: var(--tc-accent); }
+@media (min-width: 768px) {
+  .credential-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+/* "Your roadmap": numbered phases, numbers in the accent color */
+.roadmap {
+  padding-left: 1.5rem;
+  margin: 0;
+}
+.roadmap li { margin-bottom: .4rem; padding-left: .25rem; }
+.roadmap li::marker { color: var(--tc-accent); font-weight: 700; }
 
 /* Slide 0: welcome */
 .slide--welcome {
@@ -337,7 +384,7 @@ h1, h2, h3,
   margin: 0;
 }
 
-/* Slide 9: closing */
+/* Closing slide: call to action */
 .slide--closing {
   display: flex;
   flex-direction: column;
@@ -346,11 +393,44 @@ h1, h2, h3,
   gap: 1rem;
   text-align: center;
 }
-.slide-closing__email {
-  font-size: 1.25rem;
+.slide-closing__title {
+  font-size: clamp(1.75rem, 1.2rem + 2.4vw, 3rem);
   font-weight: 700;
+  color: var(--tc-accent);
+  margin: 0;
+}
+.slide-closing__offer {
+  font-size: 1.25rem;
+  margin: 0;
+}
+.slide-closing__email {
+  display: flex;
+  flex-direction: column;
+  gap: .25rem;
+  font-size: 1.125rem;
   overflow-wrap: anywhere;         /* long address can break on narrow screens */
   margin: 0;
+}
+.slide-closing__name { font-weight: 700; }
+
+/* Filled accent button; 44px minimum height matches the other touch targets */
+.cta-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: .625rem 1.5rem;
+  border: 2px solid var(--tc-accent);
+  border-radius: 999px;
+  background: var(--tc-accent);
+  color: var(--tc-accent-contrast);
+  font-weight: 700;
+  text-decoration: none;
+  transition: background-color .2s, color .2s;
+}
+.cta-button:hover {
+  background: transparent;
+  color: var(--tc-accent);
 }
 
 /* Controls bar: arrows at the sides, counter centered */

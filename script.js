@@ -75,6 +75,12 @@
     let index = 0;
     let fullscreen = false;
 
+    // Number each slide for screen readers ("3 of 10") from its position,
+    // so slides can be added, removed or reordered without editing labels.
+    slides.forEach((slide, i) => {
+      slide.setAttribute('aria-label', `${i + 1} of ${slides.length}`);
+    });
+
     // Keep --nav-h equal to the real nav height (it grows with large text),
     // so the full-screen slideshow starts exactly below the nav.
     new ResizeObserver(([entry]) => {
